@@ -1,4 +1,4 @@
-{% extends 'caffeinated_comments/base.html' %}
+{% extends 'blog/base.html' %}
 {% block title %}Too Many Posts!{% endblock title %}
 
 {% block content %}
@@ -6,7 +6,7 @@
     <div class='col'>
         <h3>Too many posts! Can't add another one! </h3>
 
-        <button class="btn btn-primary" onclick="window.location.href='{% url "caffeinated_comments:browse" page=1 %}'" id="redirectButton">Go back to browse</button>
+        <button class="btn btn-primary" onclick="window.location.href='{% url "blog:browse" page=1 %}'" id="redirectButton">Go back to browse</button>
     </div>
 </div>
 {% endblock content %}

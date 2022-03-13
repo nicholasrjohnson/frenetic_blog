@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.utils import timezone
-from .forms import AddCommentForm, BrowseForm, AddEditPostForm
+from .forms import BrowseForm, AddEditPostForm
 from django.db.models import Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth import authenticate, login as auth_login, logout
@@ -15,7 +15,7 @@ from django.contrib import messages
 from .models import Post, Comment
 
 def index(request):
-    return render(request, 'caffeinated_comments/index.html')
+    return render(request, 'blog/index.html')
 
 def browse(request, page):
     postsModel = Post.objects.get_queryset().order_by('-pub_date')
@@ -36,12 +36,10 @@ def browse(request, page):
                     postNum = request.POST['choosePost']
                     print(postNum)
                     post = Post.objects.filter(id=postNum)
-                    print('before') 
                     slug = post[0].slug
-                    print('after')
-                    return HttpResponseRedirect(reverse('caffeinated_comments:viewpost', args=[slug]))
+                    return HttpResponseRedirect(reverse('blog:viewpost', args=[slug]))
         elif 'AddPost' in request.POST:
-            return HttpResponseRedirect(reverse('caffeinated_comments:addpost'))
+            return HttpResponseRedirect(reverse('blog:addpost'))
         elif 'EditPost' in request.POST:
             form = BrowseForm(request.POST, postsList=posts)
             if form.is_valid():
@@ -49,7 +47,7 @@ def browse(request, page):
                     postNum = request.POST['choosePost']
                     post = Post.objects.filter(id=postNum)
                     slug = post[0].slug
-                    return HttpResponseRedirect(reverse('caffeinated_comments:editpost', args=[slug]))
+                    return HttpResponseRedirect(reverse('blog:editpost', args=[slug]))
         elif 'DeletePost' in request.POST:
             form = BrowseForm(request.POST, postsList=posts)
             if form.is_valid():
@@ -57,39 +55,21 @@ def browse(request, page):
                     postNum = request.POST['choosePost']
                     post = Post.objects.filter(id=postNum)
                     slug = post[0].slug
-                    return HttpResponseRedirect(reverse('caffeinated_comments:deletepost', args=[slug]))
+                    return HttpResponseRedirect(reverse('blog:deletepost', args=[slug]))
 
     form = BrowseForm(postsList=posts)
     context= {}
     context['form'] = form
     context['page'] = page
     context['posts'] = posts
-    return render(request, 'caffeinated_comments/browse.html', context)
+    return render(request, 'blog/browse.html', context)
 
 def viewpost(request, slug):
     post = get_object_or_404(Post, slug=slug)
     context={}
     context['post'] = post
     context['slug'] = slug
-    if request.method == 'POST':
-        form = AddCommentForm(request.POST)
-        if form.is_valid():
-            comment = Comment(pub_date=timezone.now(), created_by=request.user)
-            comment.body = form.cleaned_data['commentText']
-            #replied_to will get changed to be an actual replied to comment in a hierarchy
-            try:
-                repliedComment = Comment.objects.filter(post=post).latest('pub_date')
-            except Comment.DoesNotExist:
-                repliedComment = None
-            comment.replied_to = repliedComment
-            comment.created_by = request.user
-            comment.post = post
-            comment.save()
-            context['form'] = form
-            return render(request, 'caffeinated_comments/viewpost.html', context)
-    form = AddCommentForm()
-    context['form'] = form
-    return render(request, 'caffeinated_comments/viewpost.html', context) 
+    return render(request, 'blog/viewpost.html', context) 
 
 @login_required(login_url='/accounts/login')
 def addpost(request):

@@ -1,4 +1,4 @@
-{% extends 'caffeinated_comments/base.html' %} 
+{% extends 'blog/base.html' %} 
 {% load crispy_forms_tags %}
 {% block title %}Blog Posts{% endblock title %}
 
@@ -16,7 +16,7 @@
         <nav>
             <ul class="pagination justify-content-center">
                 <li class="page-item {% if not posts.has_previous %} disabled {% endif %}">
-                    <a class="page-link" href="{% if posts.has_previous %} {% url 'caffeinated_comments:browse' page=posts.previous_page_number %}{% endif %}">Previous</a>
+                    <a class="page-link" href="{% if posts.has_previous %} {% url 'blog:browse' page=posts.previous_page_number %}{% endif %}">Previous</a>
                 </li>
 
               {% if posts.number|add:'-2' > 1 %}
@@ -28,7 +28,7 @@
                   {% if posts.number == i %}
                       <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
                   {% elif i > posts.number|add:'-3' and i < posts.number|add:'3' %}
-                      <li class="page-item"><a class="page-link" href="{% url 'caffeinated_comments:browse' page=i %}">{{ i }}</a></li>
+                      <li class="page-item"><a class="page-link" href="{% url 'blog:browse' page=i %}">{{ i }}</a></li>
                   {% endif %}
               {% endfor %}
 
@@ -37,7 +37,7 @@
               {% endif %}
 
               <li class="page-item {% if not posts.has_next %} disabled {% endif %}">
-                  <a class="page-link" href="{% if posts.has_next %} {% url 'caffeinated_comments:browse' page=posts.next_page_number %} {% endif %}">Next</a>
+                  <a class="page-link" href="{% if posts.has_next %} {% url 'blog:browse' page=posts.next_page_number %} {% endif %}">Next</a>
               </li>
           </ul>
         </nav>  

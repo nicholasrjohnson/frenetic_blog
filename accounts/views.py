@@ -37,7 +37,7 @@ class ProfileView(UpdateView):
     template_name = 'registration/profile.html'
 
     def get_success_url(self):
-        return reverse('caffeinated_comments:index')
+        return reverse('blog:index')
     
     def get_object(self):
         return self.request.user
