@@ -1,0 +1,11 @@
+{% extends 'caffeinated_comments/base.html' %}
+{% block title %}Post Edited{% endblock title %}
+{% block content %}
+<div class="row">
+    <div class="col">
+        <h3>Your post was edited and published  successfully!
+        
+        <button class="btn btn-primary" onclick="window.location.href='{% url "caffeinated_comments:browse" page=1 %}'" id="redirectButton">Go back to browse</button>
+    </div>
+</div>
+{% endblock content %}

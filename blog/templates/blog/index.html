@@ -1,0 +1,14 @@
+{% extends 'caffeinated_comments/base.html' %}       
+{% block title %}Welcome{% endblock title %}
+{% block content %}
+
+<div class='row'>
+    
+    <div class="col">
+        <p><h1>Welcome to the Caffeinated Comments Blog!</h1></p>
+               
+            <button class="btn btn-primary" onclick="window.location.href='{% url "accounts:login" %}'">Enter</button>
+            <button class="btn btn-primary" onclick="window.location.href='{% url "caffeinated_comments:browse" page=1 %}'">Browse Posts</button>
+    </div>
+</div>
+        {% endblock content %}
