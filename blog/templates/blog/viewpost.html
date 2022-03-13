@@ -15,9 +15,9 @@
         <div id="edited"> Edited: {{ post.edited_date }} </div>
         <br>
         <div id="published"> Published: {{ post.pub_date }} </div>
-        <button class="btn btn-primary" onclick="window.location.href='{% url "caffeinated_comments:browse" page=1 %}'" id="redirectbutton">Go back to browse</button>
+        <button class="btn btn-primary" onclick="window.location.href='{% url "blog:browse" page=1 %}'" id="redirectbutton">Go back to browse</button>
     </div>
 </div>
 
-{% caffeinated_comments %}
+{% caffeinated_comments post.Id%}
 {% endblock content %}
