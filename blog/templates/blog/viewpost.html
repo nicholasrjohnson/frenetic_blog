@@ -1,5 +1,5 @@
-{% extends 'caffeinated_comments/base.html' %}
-{% load caffeinated_comments %}
+{% extends 'blog/base.html' %}
+{% load blog %}
 {% block title %}Viewing Post{% endblock title %}
 
 {% block content %}
@@ -10,7 +10,7 @@
         <br>
         <div id="body"> {{ post.body }} </div>
         <br>
-        <div id="author"> Author: {% getAuthorName post %} </div>
+        <div id="author"> Author: {% getPostAuthorName post %} </div>
         <br>
         <div id="edited"> Edited: {{ post.edited_date }} </div>
         <br>
@@ -19,5 +19,4 @@
     </div>
 </div>
 
-{% caffeinated_comments post.Id%}
 {% endblock content %}
