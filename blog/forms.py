@@ -10,7 +10,7 @@ class BrowseForm(forms.Form):
             choices = []
 
             for post in posts:
-                choices.append((post.slug, post.title))
+                choices.append((post.get('slug'), post.get('title')))
 
             self.fields['choice'].choices = choices 
             self.helper = FormHelper(self)
@@ -22,10 +22,10 @@ class BrowseForm(forms.Form):
                 ),
 
                 ButtonHolder(
-                    Submit('viewPost', 'View Post', css_class='btn btn-lg'),
-                    Submit('addPost', 'Add Post', css_class='btn btn-lg'), 
-                    Submit('editPost', 'Edit Post', css_class='btn btn-lg'), 
-                    Submit('deletePost', 'Delete Post', css_class='btn btn-lg')
+                   Submit('viewPost', 'View Post', css_class='btn btn-lg'),
+                   Submit('addPost', 'Add Post', css_class='btn btn-lg'), 
+                   Submit('editPost', 'Edit Post', css_class='btn btn-lg'), 
+                   Submit('deletePost', 'Delete Post', css_class='btn btn-lg')
                 )
             )
 

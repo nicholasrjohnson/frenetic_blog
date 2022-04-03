@@ -36,9 +36,7 @@ def browse(request, page):
                     context['form'] = form
                     context['page'] = page
                     context['posts'] = posts
-                    print("Before slug")
                     slug = request.POST['choice']
-                    print("After slug")
                     return HttpResponseRedirect(reverse('blog:viewpost', args=[slug]))
         elif 'addPost' in request.POST:
             return HttpResponseRedirect(reverse('blog:addpost'))
@@ -67,7 +65,6 @@ def browse(request, page):
     context = {}
     context['form'] = form
     context['page'] = page
-    context['posts'] = posts
     return render(request, 'blog/browse.html', context)
         
 def viewpost(request, slug):
