@@ -9,6 +9,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.urls import reverse
+import uuid
 
 # Create your models here.
 class AuthorManager(BaseUserManager):
@@ -21,6 +22,7 @@ class AuthorManager(BaseUserManager):
             if not value:
                 raise ValueError('The {} value must be set'.format(field_name))
         email = self.normalize_email(email)
+
         user = self.model(
             email=email,
             name=name,
@@ -60,6 +62,7 @@ class Author(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True)
     bio = models.CharField(max_length=4000)
     signature = models.CharField(max_length=100)
+    uuid = models.UUIDField(unique=True, editable=False, default=uuid.uuid4)
     
     objects = AuthorManager()
 

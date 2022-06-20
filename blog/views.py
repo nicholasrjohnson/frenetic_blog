@@ -1,16 +1,10 @@
-from re import I, template
-from time import time
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views import View 
 from django.http import HttpResponseRedirect
 from django.utils import timezone
 from .forms import BrowseForm, AddEditPostForm
-from django.db.models import Max
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
 from .models import Post
 
 def index(request):
@@ -29,7 +23,7 @@ def browse(request, page):
 
     if(request.method == 'POST'):
         if 'viewPost' in request.POST:
-            form = BrowseForm(request.POST, posts)
+            form = BrowseForm(posts, request.POST)
             if form.is_valid():
                 if 'choice' in request.POST:
                     context = {}
@@ -41,7 +35,7 @@ def browse(request, page):
         elif 'addPost' in request.POST:
             return HttpResponseRedirect(reverse('blog:addpost'))
         elif 'editPost' in request.POST:
-            form = BrowseForm(request.POST, posts)
+            form = BrowseForm(posts, request.POST)
             if form.is_valid():
                 if 'choice' in request.POST:
                     context = {}
@@ -51,7 +45,7 @@ def browse(request, page):
                     slug = request.POST['choice']
                     return HttpResponseRedirect(reverse('blog:editpost', args=[slug]))
         elif 'deletePost' in request.POST:
-            form = BrowseForm(request.POST, posts)
+            form = BrowseForm(posts, request.POST)
             if form.is_valid():
                 if 'choice' in request.POST:
                     context = {}
@@ -65,6 +59,7 @@ def browse(request, page):
     context = {}
     context['form'] = form
     context['page'] = page
+    context['posts'] = posts
     return render(request, 'blog/browse.html', context)
         
 def viewpost(request, slug):

@@ -1,22 +1,29 @@
 {% extends 'blog/base.html' %}
-{% load blog %}
 {% block title %}Viewing Post{% endblock title %}
-
+{ load caffeinated_comments }
 {% block content %}
 
-<div class="row">
-    <div class="col">
-        <h2 id="title"> {{ post.title }} </h2>
-        <br>
-        <div id="body"> {{ post.body }} </div>
-        <br>
-        <div id="author"> Author: {% getPostAuthorName post %} </div>
-        <br>
-        <div id="edited"> Edited: {{ post.edited_date }} </div>
-        <br>
-        <div id="published"> Published: {{ post.pub_date }} </div>
-        <button class="btn btn-primary" onclick="window.location.href='{% url "blog:browse" page=1 %}'" id="redirectbutton">Go back to browse</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2 id="title"> {{ post.title }} </h2>
+            <br>
+            <div id="body"> {{ post.body }} </div>
+            <br>
+            <div id="author"> Author: {% getPostAuthorName post %} </div>
+            <br>
+            <div id="edited"> Edited: {{ post.edited_date }} </div>
+            <br>
+            <div id="published"> Published: {{ post.pub_date }} </div>
+            <button class="btn btn-primary" onclick="window.location.href='{% url "blog:browse" page=1 %}'" id="redirectbutton">Go back to browse</button>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col">
+
+        </div>
     </div>
 </div>
+{% caffeinated_comments post.id %}
 
 {% endblock content %}

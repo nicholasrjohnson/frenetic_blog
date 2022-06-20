@@ -1,4 +1,3 @@
-from .models import Post
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, ButtonHolder, Submit, Fieldset
 from django import forms
@@ -9,8 +8,10 @@ class BrowseForm(forms.Form):
             super().__init__(*args, **kwargs)
             choices = []
 
+            print(posts)
+
             for post in posts:
-                choices.append((post.get('slug'), post.get('title')))
+                choices.append((post.slug, post.title))
 
             self.fields['choice'].choices = choices 
             self.helper = FormHelper(self)
