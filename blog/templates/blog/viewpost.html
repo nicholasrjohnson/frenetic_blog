@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block title %}Viewing Post{% endblock title %}
-{ load caffeinated_comments }
+{% load caffeinated_comments %}
 {% block content %}
 
 <div class="container-fluid">
@@ -10,7 +10,7 @@
             <br>
             <div id="body"> {{ post.body }} </div>
             <br>
-            <div id="author"> Author: {% getPostAuthorName post %} </div>
+            <div id="author"> Author: {{ post.created_by }} </div>
             <br>
             <div id="edited"> Edited: {{ post.edited_date }} </div>
             <br>
